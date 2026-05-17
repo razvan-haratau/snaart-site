@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #FAF7F2;
+    color: #2C2416;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-gold text-white font-medium rounded-none border border-gold hover:bg-gold-dark hover:border-gold-dark active:scale-95 transition-all tracking-widest text-sm uppercase;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-transparent text-charcoal font-medium rounded-none border border-charcoal hover:bg-charcoal hover:text-cream active:scale-95 transition-all tracking-widest text-sm uppercase;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-charcoal font-medium hover:text-gold transition-colors tracking-wider text-sm uppercase;
+  }
+  .card {
+    @apply bg-white rounded-none shadow-card;
+  }
+  .section-title {
+    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal tracking-wider;
+  }
+  .section-subtitle {
+    @apply font-sans text-base text-brand-muted tracking-wide;
+  }
+  .gold-divider {
+    @apply w-12 h-px bg-gold mx-auto my-4;
+  }
+  .gold-divider-left {
+    @apply w-12 h-px bg-gold my-4;
+  }
+}
+
+@layer utilities {
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease both;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FAF7F2; }
+::-webkit-scrollbar-thumb { background: #C9A96E; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #B8935A; }
