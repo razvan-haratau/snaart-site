@@ -97,9 +97,11 @@ export default function HomePage() {
           {/* Image */}
           <div className="relative">
             <div className="aspect-[4/5] bg-cream-darker overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center">
-                <span className="font-serif text-8xl text-gold/20">S</span>
-              </div>
+              <img
+                src="/hero-artist.jpg"
+                alt="Alexandra pictând în atelier"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="absolute -bottom-4 -left-4 w-24 h-24 border border-gold/30" />
             <div className="absolute -top-4 -right-4 w-16 h-16 border border-gold/20" />
