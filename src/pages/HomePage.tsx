@@ -151,33 +151,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
-          <p className="font-serif text-5xl font-light text-charcoal tracking-wider">GALERIE</p>
-          <div className="gold-divider" />
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.key}
-              to={`/galerie?categoria=${encodeURIComponent(cat.key)}`}
-              className="group block relative overflow-hidden aspect-[3/4]"
-            >
-              <div className={`w-full h-full ${cat.bg} flex items-center justify-center`}>
-                <span className="font-serif text-5xl text-charcoal/10 group-hover:text-charcoal/20 transition-colors">S</span>
-              </div>
-              <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/30 transition-colors duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 transition-transform">
-                <p className="font-serif text-lg font-light text-white tracking-wider">{cat.label}</p>
-                <p className="flex items-center gap-1 text-gold text-xs tracking-widest uppercase font-sans mt-1">
-                  {cat.desc} <ArrowRight size={10} />
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* Featured Products */}
       {(featured.length > 0 || isLoading) && (
