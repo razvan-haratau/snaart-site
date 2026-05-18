@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, X, Check } from 'lucide-react'
+import { useEffect, useState, useRef } from 'react'
+import { Plus, Pencil, Trash2, X, Check, Upload, Loader2 } from 'lucide-react'
 import { useProductsStore } from '../../store/productsStore'
+import { uploadImage, deleteImage } from '../../lib/imageUpload'
 import type { Product, ProductCategory } from '../../types'
 
 const CATEGORIES: ProductCategory[] = ['Abstract Gold', 'Neutral Collection', 'Textured Art', 'Custom Works']
@@ -23,6 +24,9 @@ export default function AdminProducts() {
   const [form, setForm] = useState<FormState>(emptyForm())
   const [saving, setSaving] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+  const [uploadingIdx, setUploadingIdx] = useState<number | null>(null)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileInputRefs = useRef<(HTMLInputElement | null)[]>([])
 
   useEffect(() => { fetchProducts() }, [fetchProducts])
 
@@ -259,29 +263,74 @@ export default function AdminProducts() {
               </div>
 
               <div>
-                <label className="block text-xs tracking-widest uppercase text-charcoal mb-2 font-sans">URL-uri imagini</label>
-                {form.images.map((url, i) => (
-                  <div key={i} className="flex gap-2 mb-2">
-                    <input
-                      value={url}
-                      onChange={(e) => {
-                        const imgs = [...form.images]
-                        imgs[i] = e.target.value
-                        setField('images', imgs)
-                      }}
-                      placeholder={`https://...`}
-                      className="flex-1 px-4 py-2.5 border border-cream-darker text-sm outline-none focus:border-gold transition-colors"
-                    />
-                    {form.images.length > 1 && (
-                      <button type="button" onClick={() => setField('images', form.images.filter((_, j) => j !== i))} className="text-brand-muted hover:text-red-500 transition-colors">
-                        <X size={14} />
+                <label className="block text-xs tracking-widests uppercase text-charcoal mb-2 font-sans">Imagini</label>
+                {uploadError && (
+                  <p className="text-red-500 text-xs mb-2">{uploadError}</p>
+                )}
+                <div className="grid grid-cols-3 gap-3 mb-3">
+                  {form.images.filter(Boolean).map((url, i) => (
+                    <div key={i} className="relative group aspect-square bg-cream-darker overflow-hidden">
+                      <img src={url} alt="" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          await deleteImage(url)
+                          setField('images', form.images.filter((_, j) => j !== i))
+                        }}
+                        className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X size={12} />
                       </button>
+                    </div>
+                  ))}
+
+                  {/* Upload button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const idx = form.images.filter(Boolean).length
+                      fileInputRefs.current[idx]?.click()
+                    }}
+                    className="aspect-square border-2 border-dashed border-cream-darker hover:border-gold flex flex-col items-center justify-center gap-1 transition-colors"
+                  >
+                    {uploadingIdx !== null ? (
+                      <Loader2 size={20} className="text-gold animate-spin" />
+                    ) : (
+                      <>
+                        <Upload size={20} className="text-brand-muted" />
+                        <span className="text-xs text-brand-muted">Adaugă</span>
+                      </>
                     )}
-                  </div>
+                  </button>
+                </div>
+
+                {/* Hidden file inputs */}
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <input
+                    key={i}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    ref={(el) => { fileInputRefs.current[i] = el }}
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0]
+                      if (!file) return
+                      setUploadError(null)
+                      setUploadingIdx(i)
+                      try {
+                        const url = await uploadImage(file)
+                        const imgs = [...form.images.filter(Boolean), url]
+                        setField('images', imgs)
+                      } catch (err) {
+                        setUploadError('Eroare la upload. Încearcă din nou.')
+                      } finally {
+                        setUploadingIdx(null)
+                        e.target.value = ''
+                      }
+                    }}
+                  />
                 ))}
-                <button type="button" onClick={() => setField('images', [...form.images, ''])} className="text-xs text-gold hover:underline tracking-wider mt-1">
-                  + Adaugă imagine
-                </button>
+                <p className="text-xs text-brand-muted">Imaginile sunt comprimate automat. Max 5 poze per lucrare.</p>
               </div>
 
               <div className="flex gap-3 pt-4 border-t border-cream-darker">
