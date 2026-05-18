@@ -152,6 +152,40 @@ export default function HomePage() {
       </section>
 
 
+      {/* Story Section */}
+      <section className="py-24 px-6">
+        <div className="max-w-3xl mx-auto">
+          <p className="font-serif text-4xl md:text-5xl font-light text-charcoal tracking-wider mb-3">
+            Fiecare lucrare
+          </p>
+          <p className="font-serif text-4xl md:text-5xl font-light text-gold tracking-wider mb-8">
+            are o poveste.
+          </p>
+          <div className="w-10 h-px bg-gold mb-10" />
+          <div className="space-y-6 text-charcoal-lighter leading-relaxed text-base md:text-lg font-serif font-light">
+            <p>
+              Începe mereu cu o senzație — nu cu un plan. Uneori e o culoare pe care am văzut-o
+              undeva și nu mi-a ieșit din minte. Alteori e o stare, o lumină de dimineață,
+              un moment de liniște pe care vreau să-l opresc în loc.
+            </p>
+            <p>
+              Prima pensulă e întotdeauna cea mai curajoasă. Pânza albă nu iartă ezitarea,
+              așa că mă arunc — cu pastă, cu culoare, cu toată energia momentului.
+              Straturile se adună unul peste altul, fiecare ascunzând câte ceva din cel de dinainte,
+              dar lăsând urme. Exact ca în viață.
+            </p>
+            <p>
+              Foița de aur vine la final, cu răbdare și cu mâinile care tremură puțin de fiecare dată.
+              Nu pentru că e greu, ci pentru că știu că atunci lucrarea devine altceva —
+              prinde lumină, respiră. Devine vie.
+            </p>
+            <p className="text-gold font-serif italic text-xl">
+              Și atunci știu că e gata.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Products */}
       {(featured.length > 0 || isLoading) && (
         <section className="bg-white py-20">
