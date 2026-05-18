@@ -1,4 +1,4 @@
-import{u,j as e}from"./index-BWW0FalV.js";import{r as c,L as n}from"./react-vendor-OVubwXBr.js";import{P as p}from"./ProductCard-BUEBanVJ.js";import{c as d,d as g,G as h,L as j,F as f,Q as b}from"./ui-VQdhosvX.js";import"./supabase-CMqlVAMk.js";import"./constants-h8VpmHJb.js";const N=[{icon:g,label:`Lucrări
+import{u,j as e}from"./index-C55wG3V5.js";import{r as c,L as n}from"./react-vendor-BnyWv7ER.js";import{P as p}from"./ProductCard-BA2mvjyt.js";import{b as d,S as g,G as h,L as j,F as f,Q as b}from"./ui-1Hc795AO.js";import"./supabase-CMqlVAMk.js";import"./ordersStore-sV2QLURD.js";const N=[{icon:g,label:`Lucrări
 realizate manual`},{icon:h,label:`Piese unicat
 și originale`},{icon:j,label:`Materiale premium
 și foiță de aur`},{icon:f,label:`Personalizare

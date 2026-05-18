@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ShoppingBag, Menu, X, Instagram } from 'lucide-react'
-import { useCartStore } from '../store/cartStore'
+import { Menu, X, Instagram } from 'lucide-react'
 
 function TikTokIcon({ size = 18 }: { size?: number }) {
   return (
@@ -22,8 +21,6 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const { toggleCart, itemCount } = useCartStore()
-  const count = itemCount()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30)
@@ -86,18 +83,6 @@ export default function Navbar() {
               <TikTokIcon size={18} />
             </a>
 
-            <button
-              onClick={toggleCart}
-              className="relative text-charcoal hover:text-gold transition-colors"
-              aria-label="Coș de cumpărături"
-            >
-              <ShoppingBag size={20} />
-              {count > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold text-white text-[10px] font-bold flex items-center justify-center rounded-full">
-                  {count > 9 ? '9+' : count}
-                </span>
-              )}
-            </button>
             <button
               onClick={() => setMenuOpen(true)}
               className="md:hidden text-charcoal hover:text-gold transition-colors"

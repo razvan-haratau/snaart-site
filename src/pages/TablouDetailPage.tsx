@@ -1,18 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ShoppingBag, ChevronLeft, ChevronRight, X, Minus, Plus, ArrowLeft, Truck, RotateCcw, Shield } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, ArrowLeft, Truck, Shield, MessageCircle } from 'lucide-react'
 import { useProductsStore } from '../store/productsStore'
-import { useCartStore } from '../store/cartStore'
 import ProductCard from '../components/ProductCard'
+import RequestModal from '../components/RequestModal'
 import { CATEGORY_COLORS } from '../lib/constants'
 
 export default function TablouDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { products, fetchProducts } = useProductsStore()
-  const { addItem, openCart } = useCartStore()
   const [imgIdx, setImgIdx] = useState(0)
   const [lightbox, setLightbox] = useState(false)
-  const [qty, setQty] = useState(1)
+  const [showRequest, setShowRequest] = useState(false)
 
   useEffect(() => { if (products.length === 0) fetchProducts() }, [products.length, fetchProducts])
 
@@ -63,11 +62,6 @@ export default function TablouDetailPage() {
     .sort((a, b) => (a.category === product.category ? -1 : 1) - (b.category === product.category ? -1 : 1))
     .slice(0, 4)
 
-  const handleAdd = () => {
-    addItem(product, qty)
-    openCart()
-  }
-
   return (
     <div className="min-h-screen bg-cream pt-16">
       {/* Breadcrumb */}
@@ -84,7 +78,6 @@ export default function TablouDetailPage() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-20 grid lg:grid-cols-2 gap-12">
         {/* Gallery */}
         <div>
-          {/* Main Image */}
           <div
             className="relative aspect-[4/5] bg-cream-darker overflow-hidden cursor-zoom-in mb-3"
             onClick={() => product.images.length > 0 && setLightbox(true)}
@@ -122,7 +115,6 @@ export default function TablouDetailPage() {
               </>
             )}
           </div>
-          {/* Thumbnails */}
           {product.images.length > 1 && (
             <div className="flex gap-2">
               {product.images.map((img, i) => (
@@ -173,8 +165,8 @@ export default function TablouDetailPage() {
             )}
             <div className="border-b border-cream-darker pb-3">
               <p className="text-xs tracking-widest uppercase text-brand-muted mb-1">Disponibilitate</p>
-              <p className={isOOS ? 'text-red-500' : product.stock_qty <= 2 ? 'text-amber-600' : 'text-emerald-600'}>
-                {isOOS ? 'Indisponibil' : product.stock_qty <= 2 ? `Ultimul exemplar` : 'Disponibil'}
+              <p className={isOOS ? 'text-red-500' : 'text-emerald-600'}>
+                {isOOS ? 'Indisponibil' : 'Disponibil'}
               </p>
             </div>
           </div>
@@ -191,37 +183,35 @@ export default function TablouDetailPage() {
             )}
           </div>
 
-          {/* Quantity + Add to Cart */}
-          {!isOOS && (
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center border border-cream-darker">
-                <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-10 h-10 flex items-center justify-center hover:bg-cream-dark transition-colors">
-                  <Minus size={14} />
-                </button>
-                <span className="w-10 h-10 flex items-center justify-center text-sm font-medium">{qty}</span>
-                <button onClick={() => setQty(Math.min(product.stock_qty, qty + 1))} className="w-10 h-10 flex items-center justify-center hover:bg-cream-dark transition-colors">
-                  <Plus size={14} />
-                </button>
-              </div>
-              <button onClick={handleAdd} className="btn-primary flex-1 justify-center gap-2">
-                <ShoppingBag size={16} />
-                Adaugă în coș
+          {/* CTA */}
+          {!isOOS ? (
+            <div className="space-y-3 mb-8">
+              <button
+                onClick={() => setShowRequest(true)}
+                className="btn-primary w-full justify-center gap-2"
+              >
+                <MessageCircle size={16} />
+                Solicită această lucrare
               </button>
+              <p className="text-xs text-brand-muted text-center leading-relaxed">
+                Nu se percepe nicio plată acum. Vei fi contactat(ă) pentru a discuta detaliile comenzii și livrarea.
+              </p>
+            </div>
+          ) : (
+            <div className="mb-8 p-4 border border-cream-darker bg-white">
+              <p className="text-sm text-brand-muted italic leading-relaxed">
+                Această lucrare nu mai este disponibilă momentan.{' '}
+                <Link to="/contact" className="text-gold hover:underline">Contactează-mă</Link>
+                {' '}pentru a discuta o piesă similară sau o comandă personalizată.
+              </p>
             </div>
           )}
 
-          {isOOS && (
-            <p className="text-sm text-brand-muted italic mb-6">
-              Această lucrare nu mai este disponibilă. Contactează-mă pentru o piesă similară.
-            </p>
-          )}
-
           {/* Trust badges */}
-          <div className="grid grid-cols-3 gap-3 pt-6 border-t border-cream-darker">
+          <div className="grid grid-cols-2 gap-3 pt-6 border-t border-cream-darker">
             {[
               { icon: Truck, label: 'Livrare\nîn România' },
               { icon: Shield, label: 'Lucrare\noriginală' },
-              { icon: RotateCcw, label: 'Retur\n30 de zile' },
             ].map(({ icon: Icon, label }) => (
               <div key={label} className="flex flex-col items-center text-center gap-2">
                 <Icon size={18} className="text-gold" strokeWidth={1.5} />
@@ -247,7 +237,6 @@ export default function TablouDetailPage() {
         </section>
       )}
 
-      {/* Back button */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         <Link to="/galerie" className="inline-flex items-center gap-2 text-sm text-brand-muted hover:text-gold transition-colors tracking-wider">
           <ArrowLeft size={14} />
@@ -278,6 +267,10 @@ export default function TablouDetailPage() {
             </>
           )}
         </div>
+      )}
+
+      {showRequest && (
+        <RequestModal product={product} onClose={() => setShowRequest(false)} />
       )}
     </div>
   )

@@ -5,7 +5,6 @@ import { useProductsStore } from './store/productsStore'
 import { useSettingsStore } from './store/settingsStore'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import CartDrawer from './components/CartDrawer'
 import CookieBanner from './components/CookieBanner'
 import ScrollToTop from './components/ScrollToTop'
 import ScrollToTopButton from './components/ScrollToTopButton'
@@ -17,7 +16,6 @@ const TablouDetailPage = lazy(() => import('./pages/TablouDetailPage'))
 const DesprePage = lazy(() => import('./pages/DesprePage'))
 const InformatiiPage = lazy(() => import('./pages/InformatiiPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
-const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const LegalPages = lazy(() => import('./pages/LegalPages'))
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'))
@@ -53,7 +51,6 @@ export default function App() {
     <BrowserRouter>
       <ErrorBoundary>
         <ScrollToTop />
-        <CartDrawer />
         <CookieBanner />
         <ScrollToTopButton />
         <Suspense fallback={
@@ -64,19 +61,16 @@ export default function App() {
           </div>
         }>
           <Routes>
-            {/* Public */}
             <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
             <Route path="/galerie" element={<PublicLayout><GaleriePage /></PublicLayout>} />
             <Route path="/tablou/:id" element={<PublicLayout><TablouDetailPage /></PublicLayout>} />
             <Route path="/despre" element={<PublicLayout><DesprePage /></PublicLayout>} />
             <Route path="/informatii" element={<PublicLayout><InformatiiPage /></PublicLayout>} />
             <Route path="/contact" element={<PublicLayout><ContactPage /></PublicLayout>} />
-            <Route path="/checkout" element={<PublicLayout><CheckoutPage /></PublicLayout>} />
             <Route path="/termeni" element={<PublicLayout><LegalPages /></PublicLayout>} />
             <Route path="/confidentialitate" element={<PublicLayout><LegalPages /></PublicLayout>} />
             <Route path="/retur" element={<PublicLayout><LegalPages /></PublicLayout>} />
             <Route path="/gdpr" element={<PublicLayout><LegalPages /></PublicLayout>} />
-            {/* Admin */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="lucrari" element={<AdminProducts />} />
