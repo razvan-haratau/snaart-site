@@ -7,7 +7,7 @@ import type { Product, ProductCategory } from '../../types'
 const CATEGORIES: ProductCategory[] = ['Abstract Gold', 'Neutral Collection', 'Textured Art', 'Custom Works']
 const TECHNIQUES = ['Acrilic + Foiță de Aur', 'Mixed Media', 'Ulei + Textură', 'Alcohol Ink', 'Pastă de Textură', 'Altele']
 const SURFACES = ['Pânză pe șasiu', 'Pânză înrămată', 'MDF', 'Altele']
-const DIMENSIONS = ['30x40 cm', '40x50 cm', '50x60 cm', '50x70 cm', '60x80 cm', '70x100 cm', '80x100 cm', '100x120 cm', 'Personalizat']
+const DIMENSIONS = ['30x40 cm', '40x50 cm', '50x60 cm', '50x70 cm', '60x80 cm', '70x100 cm', '80x100 cm', '100x120 cm', '100x150 cm', 'Personalizat']
 
 type FormState = Omit<Product, 'id' | 'created_at' | 'updated_at'>
 

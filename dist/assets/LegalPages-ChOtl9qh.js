@@ -1,4 +1,4 @@
-import{j as e}from"./index-D-2aUL6I.js";import{u as l}from"./react-vendor-BnyWv7ER.js";import"./supabase-CMqlVAMk.js";import"./ui-1Hc795AO.js";const n={"/termeni":{title:"Termeni și Condiții",content:`Prin utilizarea site-ului SNAART, acceptați termenii și condițiile prezentate mai jos.
+import{j as e}from"./index-DC8ZgLte.js";import{u as l}from"./react-vendor-BnyWv7ER.js";import"./supabase-CMqlVAMk.js";import"./ui-1Hc795AO.js";const n={"/termeni":{title:"Termeni și Condiții",content:`Prin utilizarea site-ului SNAART, acceptați termenii și condițiile prezentate mai jos.
 
 Toate lucrările prezentate pe site sunt proprietatea artistei și sunt protejate de dreptul de autor. Este interzisă reproducerea sau utilizarea comercială fără acordul scris al artistei.
 
