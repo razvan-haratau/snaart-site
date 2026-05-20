@@ -98,7 +98,7 @@ export default function HomePage() {
           <div className="relative">
             <div className="aspect-[4/5] bg-cream-darker overflow-hidden">
               <img
-                src="/hero-artist.jpg"
+                src="/first-photo.jpg"
                 alt="Alexandra pictând în atelier"
                 className="w-full h-full object-cover"
               />
@@ -115,9 +115,11 @@ export default function HomePage() {
           {/* Left image area */}
           <div className="lg:col-span-1 relative">
             <div className="aspect-square bg-cream-darker overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center">
-                <span className="font-serif text-6xl text-gold/20">A</span>
-              </div>
+              <img
+                src="/hero-artist.jpg"
+                alt="Alexandra în atelier"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 

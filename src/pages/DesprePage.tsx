@@ -25,9 +25,11 @@ export default function DesprePage() {
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <div className="aspect-[4/5] bg-cream-darker overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="font-serif text-8xl text-gold/20">S</span>
-            </div>
+            <img
+              src="/hero-artist.jpg"
+              alt="Alexandra pictând în atelier"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
             <p className="font-serif text-4xl font-light text-charcoal tracking-wider mb-2">
