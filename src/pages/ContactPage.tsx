@@ -25,7 +25,17 @@ export default function ContactPage() {
     e.preventDefault()
     if (form.hp) return
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1200))
+    await fetch('/.netlify/functions/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'contact',
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+      }),
+    })
     setLoading(false)
     setSent(true)
   }

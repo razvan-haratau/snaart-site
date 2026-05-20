@@ -35,6 +35,22 @@ export default function RequestModal({ product, onClose }: Props) {
     setLoading(true)
 
     const id = `CER-${Math.random().toString(36).substr(2, 6).toUpperCase()}`
+
+    // Trimite email
+    await fetch('/.netlify/functions/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'request',
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+        productName: product.name,
+        productPrice: product.price.toLocaleString('ro-RO'),
+      }),
+    })
+
     await addOrder({
       id,
       customer_name: form.name,
