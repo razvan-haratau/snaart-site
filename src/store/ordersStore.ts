@@ -30,13 +30,11 @@ export const useOrdersStore = create<OrdersState>((set) => ({
   },
 
   addOrder: async (order) => {
-    const { data, error } = await supabase.from('orders').insert([order]).select().single()
+    const { error } = await supabase.from('orders').insert([order])
     if (error) {
       return { ok: false, error: error.message }
     }
-    if (data) {
-      set((s) => ({ orders: [data as Order, ...s.orders] }))
-    }
+    set((s) => ({ orders: [order, ...s.orders] }))
     return { ok: true }
   },
 
