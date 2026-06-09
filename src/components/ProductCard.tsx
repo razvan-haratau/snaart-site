@@ -62,29 +62,29 @@ export default function ProductCard({ product }: Props) {
         </Link>
 
         {/* Info */}
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className={`text-[10px] tracking-wider uppercase px-2 py-0.5 ${CATEGORY_COLORS[product.category] ?? 'bg-gold-50 text-gold-dark'}`}>
+        <div className="p-3 sm:p-4">
+          <div className="flex items-start justify-between gap-1 mb-2">
+            <span className={`text-[9px] sm:text-[10px] tracking-wider uppercase px-1.5 py-0.5 leading-tight shrink-0 ${CATEGORY_COLORS[product.category] ?? 'bg-gold-50 text-gold-dark'}`}>
               {product.category}
             </span>
             {product.dimensions && (
-              <span className="text-[10px] text-brand-muted tracking-wide">{product.dimensions}</span>
+              <span className="text-[9px] sm:text-[10px] text-brand-muted tracking-wide text-right leading-tight">{product.dimensions}</span>
             )}
           </div>
 
-          <Link to={`/tablou/${product.id}`} className="block mb-3">
-            <h3 className="font-serif text-lg font-light text-charcoal hover:text-gold transition-colors line-clamp-2 leading-snug">
+          <Link to={`/tablou/${product.id}`} className="block mb-2 sm:mb-3">
+            <h3 className="font-serif text-base sm:text-lg font-light text-charcoal hover:text-gold transition-colors line-clamp-2 leading-snug">
               {product.name}
             </h3>
           </Link>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-serif text-xl text-charcoal">
-                {product.price.toLocaleString('ro-RO')} RON
+          <div className="flex items-center justify-between gap-1">
+            <div className="min-w-0">
+              <span className="font-serif text-base sm:text-xl text-charcoal">
+                {product.price.toLocaleString('ro-RO')} <span className="text-sm">RON</span>
               </span>
               {product.show_compare_price && product.compare_price && product.compare_price > product.price && (
-                <span className="text-sm text-brand-muted line-through ml-2">
+                <span className="text-xs text-brand-muted line-through block sm:inline sm:ml-2">
                   {product.compare_price.toLocaleString('ro-RO')} RON
                 </span>
               )}
@@ -92,7 +92,7 @@ export default function ProductCard({ product }: Props) {
             <button
               onClick={() => !isOOS && setShowRequest(true)}
               disabled={isOOS}
-              className={`text-xs tracking-widest uppercase px-3 py-2 border transition-colors ${
+              className={`text-[10px] sm:text-xs tracking-widest uppercase px-2 sm:px-3 py-1.5 sm:py-2 border transition-colors shrink-0 ${
                 isOOS
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed'
                   : 'border-gold text-gold hover:bg-gold hover:text-white'
