@@ -36,38 +36,38 @@ export default function Footer() {
               href={settings.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-charcoal flex flex-col items-center gap-3 py-8 hover:bg-charcoal-lighter transition-colors group"
+              className="bg-charcoal flex flex-col items-center gap-2 sm:gap-3 py-6 sm:py-8 px-2 hover:bg-charcoal-lighter transition-colors group overflow-hidden"
             >
-              <Instagram size={22} className="text-gold group-hover:scale-110 transition-transform" />
-              <div className="text-center">
-                <p className="text-xs tracking-widest uppercase text-cream/60">Instagram</p>
-                <p className="text-sm text-cream mt-1">@snaart2026</p>
+              <Instagram size={20} className="text-gold group-hover:scale-110 transition-transform shrink-0" />
+              <div className="text-center w-full overflow-hidden">
+                <p className="text-[9px] sm:text-xs tracking-widest uppercase text-cream/60">Instagram</p>
+                <p className="text-[10px] sm:text-sm text-cream mt-0.5 truncate">@snaart2026</p>
               </div>
             </a>
             <a
               href={`https://wa.me/40${settings.whatsapp.replace(/[^0-9]/g, '').slice(1)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-charcoal flex flex-col items-center gap-3 py-8 hover:bg-charcoal-lighter transition-colors group"
+              className="bg-charcoal flex flex-col items-center gap-2 sm:gap-3 py-6 sm:py-8 px-2 hover:bg-charcoal-lighter transition-colors group overflow-hidden"
             >
-              <MessageCircle size={22} className="text-gold group-hover:scale-110 transition-transform" />
-              <div className="text-center">
-                <p className="text-xs tracking-widest uppercase text-cream/60">WhatsApp</p>
-                <p className="text-sm text-cream mt-1">{settings.whatsapp}</p>
+              <MessageCircle size={20} className="text-gold group-hover:scale-110 transition-transform shrink-0" />
+              <div className="text-center w-full overflow-hidden">
+                <p className="text-[9px] sm:text-xs tracking-widest uppercase text-cream/60">WhatsApp</p>
+                <p className="text-[10px] sm:text-sm text-cream mt-0.5 truncate">{settings.whatsapp}</p>
               </div>
             </a>
             <a
               href={tiktokUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-charcoal flex flex-col items-center gap-3 py-8 hover:bg-charcoal-lighter transition-colors group"
+              className="bg-charcoal flex flex-col items-center gap-2 sm:gap-3 py-6 sm:py-8 px-2 hover:bg-charcoal-lighter transition-colors group overflow-hidden"
             >
-              <span className="text-gold group-hover:scale-110 transition-transform block">
-                <TikTokIcon size={22} />
+              <span className="text-gold group-hover:scale-110 transition-transform block shrink-0">
+                <TikTokIcon size={20} />
               </span>
-              <div className="text-center">
-                <p className="text-xs tracking-widest uppercase text-cream/60">TikTok</p>
-                <p className="text-sm text-cream mt-1">@alexandraharataustoe</p>
+              <div className="text-center w-full overflow-hidden">
+                <p className="text-[9px] sm:text-xs tracking-widest uppercase text-cream/60">TikTok</p>
+                <p className="text-[10px] sm:text-sm text-cream mt-0.5 truncate">@alexandraharataustoe</p>
               </div>
             </a>
           </div>
