@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { CheckCircle, ChevronRight } from 'lucide-react'
 import { useCartStore } from '../store/cartStore'
 import { useSettingsStore } from '../store/settingsStore'
@@ -11,7 +11,6 @@ import type { Order, ShippingAddress } from '../types'
 type Step = 'shipping' | 'payment' | 'done'
 
 export default function CheckoutPage() {
-  const navigate = useNavigate()
   const { items, total, clearCart } = useCartStore()
   const { settings } = useSettingsStore()
   const { addOrder } = useOrdersStore()
@@ -19,6 +18,7 @@ export default function CheckoutPage() {
   const [step, setStep] = useState<Step>('shipping')
   const [loading, setLoading] = useState(false)
   const [orderId, setOrderId] = useState('')
+  const [orderError, setOrderError] = useState('')
 
   const subtotal = total()
   const shipping = subtotal >= settings.freeShippingThreshold ? 0 : settings.shippingCost
@@ -55,7 +55,8 @@ export default function CheckoutPage() {
 
   const handleOrder = async () => {
     setLoading(true)
-    const id = `ORD-${Math.random().toString(36).substr(2, 6).toUpperCase()}`
+    setOrderError('')
+    const id = `ORD-${Math.random().toString(36).substring(2, 8).toUpperCase()}`
     const order: Order = {
       id,
       customer_email: email,
@@ -70,12 +71,17 @@ export default function CheckoutPage() {
       })),
       total: orderTotal,
       shipping_cost: shipping,
-      payment_status: payMethod === 'ramburs' ? 'pending' : 'pending',
+      payment_status: 'pending',
       order_status: 'Nouă',
       payment_method: payMethod,
       created_at: new Date().toISOString(),
     }
-    await addOrder(order)
+    const result = await addOrder(order)
+    if (!result.ok) {
+      setOrderError('A apărut o eroare la salvarea comenzii. Te rugăm să încerci din nou.')
+      setLoading(false)
+      return
+    }
     for (const item of items) {
       await decrementStock(item.product.id, item.quantity)
     }
@@ -171,6 +177,9 @@ export default function CheckoutPage() {
                   </div>
                 </label>
               ))}
+              {orderError && (
+                <p className="text-red-500 text-sm border border-red-200 bg-red-50 px-4 py-3">{orderError}</p>
+              )}
               <div className="flex gap-4 pt-4">
                 <button onClick={() => setStep('shipping')} className="btn-outline flex-1 justify-center">
                   Înapoi

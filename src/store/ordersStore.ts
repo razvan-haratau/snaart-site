@@ -7,11 +7,11 @@ interface OrdersState {
   isLoading: boolean
   error: string | null
   fetchOrders: () => Promise<void>
-  addOrder: (order: Order) => Promise<void>
+  addOrder: (order: Order) => Promise<{ ok: boolean; error?: string }>
   updateOrderStatus: (id: string, status: OrderStatus) => Promise<void>
 }
 
-export const useOrdersStore = create<OrdersState>((set, get) => ({
+export const useOrdersStore = create<OrdersState>((set) => ({
   orders: [],
   isLoading: false,
   error: null,
@@ -31,9 +31,13 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
 
   addOrder: async (order) => {
     const { data, error } = await supabase.from('orders').insert([order]).select().single()
-    if (!error && data) {
+    if (error) {
+      return { ok: false, error: error.message }
+    }
+    if (data) {
       set((s) => ({ orders: [data as Order, ...s.orders] }))
     }
+    return { ok: true }
   },
 
   updateOrderStatus: async (id, status) => {
