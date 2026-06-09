@@ -18,6 +18,7 @@ export default function RequestModal({ product, onClose }: Props) {
     message: `Sunt interesat(ă) de lucrarea "${product.name}".`,
   })
   const [phoneError, setPhoneError] = useState('')
+  const [submitError, setSubmitError] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
 
@@ -32,12 +33,10 @@ export default function RequestModal({ product, onClose }: Props) {
       return
     }
     setPhoneError('')
+    setSubmitError('')
     setLoading(true)
 
-    const id = `CER-${Math.random().toString(36).substr(2, 6).toUpperCase()}`
-
-    // Trimite email
-    await fetch('/.netlify/functions/send-email', {
+    fetch('/.netlify/functions/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -49,10 +48,10 @@ export default function RequestModal({ product, onClose }: Props) {
         productName: product.name,
         productPrice: product.price.toLocaleString('ro-RO'),
       }),
-    })
+    }).catch(() => {})
 
-    await addOrder({
-      id,
+    const result = await addOrder({
+      id: crypto.randomUUID(),
       customer_name: form.name,
       customer_email: form.email,
       customer_phone: form.phone,
@@ -67,6 +66,10 @@ export default function RequestModal({ product, onClose }: Props) {
     })
 
     setLoading(false)
+    if (!result.ok) {
+      setSubmitError('A apărut o eroare la trimiterea cererii. Te rugăm să încerci din nou.')
+      return
+    }
     setSent(true)
   }
 
@@ -163,6 +166,9 @@ export default function RequestModal({ product, onClose }: Props) {
               />
             </div>
 
+            {submitError && (
+              <p className="text-red-500 text-sm border border-red-200 bg-red-50 px-4 py-3">{submitError}</p>
+            )}
             <button type="submit" disabled={loading} className="btn-primary w-full justify-center gap-2">
               {loading ? (
                 <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
